@@ -11,19 +11,6 @@ import java.security.SecureRandom;
 public class FundamentalPhysicsPredictionRotationUtils {
     private static final Minecraft mc = Minecraft.getMinecraft();
 
-    /**
-     * @param target 目标实体。
-     * @param currentRotations 当前 [yaw, pitch] 旋转角度。
-     * @param yawSpeedMin 最小 yaw 速度。
-     * @param yawSpeedMax 最大 yaw 速度。
-     * @param pitchSpeedMin 最小 pitch 速度。
-     * @param pitchSpeedMax 最大 pitch 速度。
-     * @param randomStrength 随机化强度。
-     * @param interpolation 是否启用插值平滑。
-     * @param randomize 是否对目标位置应用随机化。
-     * @param scaffoldToggled 是否启用Scaffold模块。
-     * @return 新的 [yaw, pitch] 旋转角度。
-     */
     public static float[] rotateMotion(EntityLivingBase target, float[] currentRotations, float yawSpeedMin, float yawSpeedMax, float pitchSpeedMin, float pitchSpeedMax, double randomStrength, boolean interpolation, boolean randomize, boolean scaffoldToggled) {
         if (target == null || mc.thePlayer == null) {
             return currentRotations;
@@ -63,12 +50,6 @@ public class FundamentalPhysicsPredictionRotationUtils {
         return targetRotations;
     }
 
-    /**
-     * @param targetYaw 目标 yaw。
-     * @param targetPitch 目标 pitch。
-     * @param currentYaw 当前 yaw。
-     * @param currentPitch 当前 pitch。
-     */
     public static void applyRotationWithMouseInput(float targetYaw, float targetPitch, float currentYaw, float currentPitch) {
         if (mc.thePlayer == null) return;
 
@@ -90,11 +71,7 @@ public class FundamentalPhysicsPredictionRotationUtils {
         mc.thePlayer.rotationPitch = MathHelper.clamp_float(mc.thePlayer.rotationPitch, -90.0F, 90.0F);
     }
 
-    /**
-     * @param playerEyes 玩家眼睛位置。
-     * @param targetPos 目标位置。
-     * @return [yaw, pitch] 旋转角度。
-     */
+  
     private static float[] calculateRotations(Vec3 playerEyes, Vec3 targetPos) {
         double deltaX = targetPos.xCoord - playerEyes.xCoord;
         double deltaY = targetPos.yCoord - playerEyes.yCoord;
@@ -108,15 +85,7 @@ public class FundamentalPhysicsPredictionRotationUtils {
         return new float[]{yaw, pitch};
     }
 
-    /**
-     * @param currentRotations 当前旋转角度 [yaw, pitch]。
-     * @param targetRotations 目标旋转角度 [yaw, pitch]。
-     * @param deltaYaw yaw 速度。
-     * @param deltaPitch pitch 速度。
-     * @param distance 到目标的距离。
-     * @param target 目标实体。
-     * @return 平滑后的 [yaw, pitch] 旋转角度。
-     */
+   
     public static float[] applyBezierSmoothing(float[] currentRotations, float[] targetRotations, float deltaYaw, float deltaPitch, float distance, EntityLivingBase target) {
         double speed = Math.sqrt(target.motionX * target.motionX + target.motionY * target.motionY + target.motionZ * target.motionZ);
         float smoothFactor = MathHelper.clamp_float((float) (1.0 - distance / 15.0 + speed * 0.3), 0.3F, 0.9F);
